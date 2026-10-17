@@ -2,5 +2,14 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
     <title>Plantty</title>
+    <item>
+      <title>Plantty 0.1.2</title>
+      <pubDate>Sat, 17 Oct 2026 17:32:26 GMT</pubDate>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/florianmari/Plantty/releases/tag/v0.1.2</sparkle:releaseNotesLink>
+      <enclosure url="https://github.com/florianmari/Plantty/releases/download/v0.1.2/Plantty.zip" type="application/octet-stream" sparkle:edSignature="vPRXJo8IxX0jr7Edx1VnGzB/RupC36F6OTR3eXk5kRqQsDXNy2oWH6HxF2EJey6xPd3W12slzGaJmRpMFd04Dg==" length="9625909"/>
+    </item>
   </channel>
 </rss>
