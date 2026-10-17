@@ -78,7 +78,7 @@ struct ContentView: View {
             set: { if !$0 { ws.renaming = nil; ws.refocusTerminal() } }
         )) {
             TextField("Name", text: $renameText)
-            Button("Rename") { ws.renaming?.apply(renameText.trimmingCharacters(in: .whitespaces)) }
+            Button(ws.renaming?.confirm ?? "Rename") { ws.renaming?.apply(renameText.trimmingCharacters(in: .whitespaces)) }
             Button("Cancel", role: .cancel) {}
         }
         .onChange(of: ws.renaming?.id) { renameText = ws.renaming?.current ?? "" }

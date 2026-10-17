@@ -87,16 +87,15 @@ import Observation
 
     // MARK: Projects
 
+    /// A project is just a named group of tabs; its tabs start where you are now (or in home).
     func newProject() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.canCreateDirectories = true
-        panel.prompt = "Create Project"
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        let project = Project(name: url.lastPathComponent, directory: url.path)
-        projects.append(project)
-        newTab(in: project)
+        renaming = RenameRequest(title: "New Project", current: "", confirm: "Create") { [weak self] name in
+            guard let self, !name.isEmpty else { return }
+            let directory = self.selectedTab.flatMap { self.pwds[$0.focusedPane] } ?? NSHomeDirectory()
+            let project = Project(name: name, directory: directory)
+            self.projects.append(project)
+            self.newTab(in: project)
+        }
     }
 
     func select(_ project: Project) {
@@ -329,6 +328,7 @@ struct RenameRequest: Identifiable {
     let id = UUID()
     let title: String
     let current: String
+    var confirm = "Rename"
     let apply: (String) -> Void
 }
 

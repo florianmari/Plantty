@@ -16,7 +16,7 @@
 
 - **Ghostty engine** – the terminal emulation, Metal rendering and font handling all come from libghostty, the engine behind Ghostty.
 - **Uses your Ghostty config** – Plantty reads `~/.config/ghostty/config`, so your theme, font, keybinds, transparency and blur carry over.
-- **Projects** – group tabs under a folder. New tabs open in the project's folder.
+- **Projects** – named groups of tabs. Give a new project a name and its tabs start in the folder you're working in.
 - **Vertical or horizontal tabs** – a sidebar of projects with their tabs nested underneath, or a compact tab bar with a project dropdown. Switch with <kbd>⇧⌘T</kbd>.
 - **Auto-hide sidebar** – like Arc: the sidebar slides away and reappears when the mouse touches the left edge. Turn it on with the button in the sidebar header or <kbd>⌃⌘S</kbd>; it stays open by default.
 - **Split panes** – split right or down, nested as deep as you like. Drag a divider to resize; unfocused panes are dimmed.
