@@ -6,6 +6,12 @@
 
 <p align="center">A fast, native macOS terminal built on <a href="https://github.com/ghostty-org/ghostty">libghostty</a>,<br>with projects, vertical or horizontal tabs, and split panes.</p>
 
+<p align="center">
+  <a href="https://github.com/florianmari/Plantty/releases/latest"><b>Download for macOS</b></a>
+</p>
+
+![Plantty with the project sidebar and three split panes](docs/vertical.png)
+
 ## Features
 
 - **Ghostty engine** – the terminal emulation, Metal rendering and font handling all come from libghostty, the engine behind Ghostty.
@@ -17,6 +23,17 @@
 - **Rename tabs and projects** – right-click them or use the palette.
 - **Session restore** – reopens your tabs and splits, each pane in the folder it was last in. You can turn this off in the Tabs menu.
 - **Paste files and screenshots** – <kbd>⌘V</kbd> with a copied file pastes its path. With a copied image, such as a screenshot taken with <kbd>⌃⇧⌘4</kbd>, it saves the image to a temporary PNG and pastes that path, which suits CLI tools like Claude Code.
+
+<table>
+  <tr>
+    <td><img src="docs/horizontal.png" alt="Horizontal tabs with the project dropdown"></td>
+    <td><img src="docs/palette.png" alt="Command palette"></td>
+  </tr>
+  <tr>
+    <td align="center">Horizontal tabs with a project dropdown</td>
+    <td align="center">Command palette (<kbd>⇧⌘P</kbd>)</td>
+  </tr>
+</table>
 
 ## Keyboard shortcuts
 
@@ -37,7 +54,7 @@ When a terminal has focus, the keybinds in your Ghostty config take priority.
 
 ## Install
 
-Download `Plantty.zip` from the [latest release](https://github.com/florianmari/Plantty/releases/latest), unzip it, and move `Plantty.app` to `/Applications`.
+Download `Plantty.dmg` from the [latest release](https://github.com/florianmari/Plantty/releases/latest), open it, and drag Plantty onto Applications. A `Plantty.zip` is also available.
 
 The build is not notarized, which means Apple has not checked it. macOS will block it the first time you open it. Either right-click the app and choose **Open**, or run:
 
