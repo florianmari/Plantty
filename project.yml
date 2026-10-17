@@ -28,6 +28,10 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: dev.plantty.Plantty
         PRODUCT_NAME: Plantty
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        # libghostty is built for the host only (-Dxcframework-target=native).
+        ARCHS: arm64
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Plantty
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
