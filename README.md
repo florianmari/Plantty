@@ -58,16 +58,11 @@ When a terminal has focus, the keybinds in your Ghostty config take priority.
 
 Download `Plantty.dmg` from the [latest release](https://github.com/florianmari/Plantty/releases/latest), open it, and drag Plantty onto Applications. A `Plantty.zip` is also available.
 
-The build is not notarized yet, so macOS blocks it the first time with "Apple could not verify Plantty.app". To open it anyway, either:
-
-- run `xattr -dr com.apple.quarantine /Applications/Plantty.app`, then open Plantty normally, or
-- click **Done**, open **System Settings → Privacy & Security**, scroll to the message about Plantty, and click **Open Anyway**.
-
-You only need to do this once.
+Plantty is signed with a Developer ID and notarized by Apple, so it opens like any other app.
 
 You need macOS 26 or later on Apple Silicon.
 
-Plantty updates itself. It checks for new versions in the background, and you can also choose **Plantty → Check for Updates…**. Updates come through [Sparkle](https://sparkle-project.org) and are cryptographically signed, so Plantty only installs builds from this project. Version 0.1.1 and older have no updater, so install 0.1.2 by hand once.
+Plantty updates itself. It checks for new versions in the background, and you can also choose **Plantty → Check for Updates…**. Updates come through [Sparkle](https://sparkle-project.org) and are cryptographically signed, so Plantty only installs builds from this project. Version 0.1.1 and older have no updater, so install the latest version by hand once.
 
 ## Build from source
 

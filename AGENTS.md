@@ -85,7 +85,7 @@ The script:
 One-time setup on the release Mac:
 
 - **Certificate:** a "Developer ID Application" certificate in the login Keychain. Create it in Xcode → Settings → Accounts → team → Manage Certificates → + (Account Holder only).
-- **Notarization credentials:** run `xcrun notarytool store-credentials plantty-notary --apple-id <email> --team-id <team>` with an app-specific password from account.apple.com.
+- **Notarization credentials:** a `plantty-notary` notarytool profile in the Keychain. The current one uses an App Store Connect API key: `xcrun notarytool store-credentials plantty-notary --key <AuthKey.p8> --key-id <id> --issuer <issuer>`. An Apple ID plus an app-specific password also works. The key and issuer IDs are recorded in the gitignored `.env`; the `.p8` file itself is a secret, so never commit it.
 - **Sparkle key:** the Sparkle private key in the login Keychain. To restore it from a backup, run `generate_keys -f <file>`.
 
 The hardened runtime is on, which notarization requires. `Plantty/Plantty.entitlements` matches Ghostty's: it lets programs running inside the terminal ask for the mic, camera, AppleScript, contacts and so on. The matching `NS…UsageDescription` texts are in `project.yml`.
