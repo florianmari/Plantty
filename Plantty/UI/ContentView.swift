@@ -5,6 +5,9 @@ enum TabStyle: String {
     case vertical, horizontal
 }
 
+/// UserDefaults key: vertical sidebar slides away and reappears when the mouse touches the left edge.
+let sidebarAutoHideKey = "sidebarAutoHide"
+
 /// Chrome colors derived from the user's ghostty background so the UI blends with the terminal.
 enum Theme {
     static let nsBackground = GhosttyApp.shared.backgroundColor
@@ -26,12 +29,17 @@ enum Theme {
 struct ContentView: View {
     @Environment(Workspace.self) private var ws
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
+    @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
+    @State private var sidebarPeek = false
     @State private var renameText = ""
 
     var body: some View {
         @Bindable var ws = ws
         Group {
             switch tabStyle {
+            case .vertical where sidebarAutoHide:
+                TerminalArea()
+                    .overlay(alignment: .leading) { autoHidingSidebar }
             case .vertical:
                 HStack(spacing: 0) {
                     SidebarView().frame(width: 232)
@@ -48,7 +56,8 @@ struct ContentView: View {
         }
         // When translucent, nothing may sit behind the terminals or their opacity would stack.
         .background(Theme.isTranslucent ? Color.clear : Theme.background)
-        .background(WindowChrome())
+        .background(WindowChrome(hidesTrafficLights: tabStyle == .vertical && sidebarAutoHide && !sidebarPeek))
+        .onChange(of: sidebarAutoHide) { sidebarPeek = false }
         .ignoresSafeArea()
         .preferredColorScheme(Theme.isDark ? .dark : .light)
         .overlay(alignment: .top) {
@@ -71,6 +80,28 @@ struct ContentView: View {
             Button("Cancel", role: .cancel) {}
         }
         .onChange(of: ws.renaming?.id) { renameText = ws.renaming?.current ?? "" }
+    }
+}
+
+extension ContentView {
+    /// Arc-style: a thin hot edge reveals the sidebar over the terminal; leaving it hides it again.
+    private var autoHidingSidebar: some View {
+        ZStack(alignment: .leading) {
+            Color.clear
+                .frame(width: 5)
+                .contentShape(Rectangle())
+                .onHover { if $0 { sidebarPeek = true } }
+            if sidebarPeek {
+                SidebarView()
+                    .frame(width: 232)
+                    .background(Theme.background) // keep terminal text from showing through when translucent
+                    .overlay(alignment: .trailing) { Theme.separator.frame(width: 1) }
+                    .shadow(color: .black.opacity(0.35), radius: 18, x: 6)
+                    .onHover { if !$0 { sidebarPeek = false } }
+                    .transition(.move(edge: .leading))
+            }
+        }
+        .animation(.snappy(duration: 0.2), value: sidebarPeek)
     }
 }
 
@@ -118,12 +149,27 @@ struct ChromeButton: View {
 /// An empty compact toolbar makes AppKit center the traffic lights in a taller title bar,
 /// so the tab bar / sidebar header can be roomier and still line up with them.
 struct WindowChrome: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSView { ChromeView() }
-    func updateNSView(_ nsView: NSView, context: Context) {}
+    /// With an auto-hidden sidebar the traffic lights would sit on top of terminal text.
+    var hidesTrafficLights = false
 
-    private final class ChromeView: NSView {
+    func makeNSView(context: Context) -> ChromeView { ChromeView() }
+    func updateNSView(_ nsView: ChromeView, context: Context) {
+        nsView.hidesTrafficLights = hidesTrafficLights
+    }
+
+    final class ChromeView: NSView {
+        var hidesTrafficLights = false { didSet { applyTrafficLights() } }
+
+        private func applyTrafficLights() {
+            for kind in [NSWindow.ButtonType.closeButton, .miniaturizeButton, .zoomButton] {
+                window?.standardWindowButton(kind)?.isHidden = hidesTrafficLights
+            }
+        }
+
         override func viewDidMoveToWindow() {
             super.viewDidMoveToWindow()
+            // The first SwiftUI update can arrive before this view has a window.
+            applyTrafficLights()
             guard let window, window.toolbar == nil else { return }
             let toolbar = NSToolbar(identifier: "plantty")
             toolbar.showsBaselineSeparator = false

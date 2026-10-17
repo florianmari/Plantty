@@ -39,6 +39,7 @@ struct PlanttyCommands: Commands {
     let ws: Workspace
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
     @AppStorage(Workspace.restoreSessionKey) private var restoreSession = true
+    @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
 
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
@@ -71,6 +72,8 @@ struct PlanttyCommands: Commands {
                 tabStyle = tabStyle == .vertical ? .horizontal : .vertical
             }
             .keyboardShortcut("t", modifiers: [.command, .shift])
+            Toggle("Auto-Hide Sidebar", isOn: $sidebarAutoHide)
+                .keyboardShortcut("s", modifiers: [.command, .control])
             Toggle("Restore Tabs on Launch", isOn: $restoreSession)
         }
     }

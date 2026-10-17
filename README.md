@@ -18,6 +18,7 @@
 - **Uses your Ghostty config** – Plantty reads `~/.config/ghostty/config`, so your theme, font, keybinds, transparency and blur carry over.
 - **Projects** – group tabs under a folder. New tabs open in the project's folder.
 - **Vertical or horizontal tabs** – a sidebar of projects with their tabs nested underneath, or a compact tab bar with a project dropdown. Switch with <kbd>⇧⌘T</kbd>.
+- **Auto-hide sidebar** – like Arc: the sidebar slides away and reappears when the mouse touches the left edge. Turn it on with the button in the sidebar header or <kbd>⌃⌘S</kbd>; it stays open by default.
 - **Split panes** – split right or down, nested as deep as you like. Drag a divider to resize; unfocused panes are dimmed.
 - **Command palette** – <kbd>⇧⌘P</kbd> runs any action and jumps to any project or tab.
 - **Rename tabs and projects** – right-click them or use the palette.
@@ -49,6 +50,7 @@
 | Next / previous project | <kbd>⌃⌘]</kbd> / <kbd>⌃⌘[</kbd> |
 | Command palette | <kbd>⇧⌘P</kbd> |
 | Vertical ↔ horizontal tabs | <kbd>⇧⌘T</kbd> |
+| Auto-hide sidebar | <kbd>⌃⌘S</kbd> |
 
 When a terminal has focus, the keybinds in your Ghostty config take priority.
 

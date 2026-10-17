@@ -13,6 +13,7 @@ struct CommandPalette: View {
     @Environment(Workspace.self) private var ws
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
     @AppStorage(Workspace.restoreSessionKey) private var restoreSession = true
+    @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
     @State private var query = ""
     @State private var selection = 0
     @FocusState private var focused: Bool
@@ -106,6 +107,8 @@ struct CommandPalette: View {
             .init(id: "prev-tab", title: "Previous Tab", icon: "arrow.left", shortcut: "⇧⌘[") { ws.cycleTab(-1) },
             .init(id: "toggle-style", title: tabStyle == .vertical ? "Use Horizontal Tabs" : "Use Vertical Tabs",
                   icon: "sidebar.left", shortcut: "⇧⌘T") { tabStyle = tabStyle == .vertical ? .horizontal : .vertical },
+            .init(id: "sidebar-autohide", title: sidebarAutoHide ? "Keep Sidebar Open" : "Auto-Hide Sidebar",
+                  icon: "sidebar.left", shortcut: "⌃⌘S") { sidebarAutoHide.toggle() },
             .init(id: "restore-session",
                   title: restoreSession ? "Don't Restore Tabs on Launch" : "Restore Tabs on Launch",
                   icon: "clock.arrow.circlepath") { restoreSession.toggle() },

@@ -4,6 +4,7 @@ import SwiftUI
 struct SidebarView: View {
     @Environment(Workspace.self) private var ws
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
+    @AppStorage(sidebarAutoHideKey) private var autoHide = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -12,6 +13,13 @@ struct SidebarView: View {
                 .contentShape(Rectangle())
                 .frame(height: 40)
                 .gesture(WindowDragGesture())
+                .overlay(alignment: .trailing) {
+                    ChromeButton(systemImage: autoHide ? "sidebar.squares.left" : "sidebar.left",
+                                 help: autoHide ? "Keep Sidebar Open" : "Auto-Hide Sidebar") { autoHide.toggle() }
+                        .padding(.trailing, 8)
+                }
+                // The ScrollView below stretches up under the title bar on macOS 26 and would take this button's clicks.
+                .zIndex(1)
 
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 1) {
