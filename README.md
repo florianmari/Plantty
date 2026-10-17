@@ -58,11 +58,12 @@ When a terminal has focus, the keybinds in your Ghostty config take priority.
 
 Download `Plantty.dmg` from the [latest release](https://github.com/florianmari/Plantty/releases/latest), open it, and drag Plantty onto Applications. A `Plantty.zip` is also available.
 
-The build is not notarized, which means Apple has not checked it. macOS will block it the first time you open it. Either right-click the app and choose **Open**, or run:
+The build is not notarized yet, so macOS blocks it the first time with "Apple could not verify Plantty.app". To open it anyway, either:
 
-```sh
-xattr -dr com.apple.quarantine /Applications/Plantty.app
-```
+- run `xattr -dr com.apple.quarantine /Applications/Plantty.app`, then open Plantty normally, or
+- click **Done**, open **System Settings → Privacy & Security**, scroll to the message about Plantty, and click **Open Anyway**.
+
+You only need to do this once.
 
 You need macOS 26 or later on Apple Silicon.
 
