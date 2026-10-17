@@ -72,15 +72,27 @@ scripts/release.sh 0.1.2 notes.md
 
 The script:
 
-1. Bumps the version and build number. Sparkle compares the build number, so it must always grow.
-2. Tests, builds the Release app, and makes the zip and DMG.
-3. Signs the zip with the private key from the login Keychain.
-4. Commits and pushes the bump, then publishes the GitHub release.
-5. Only then adds the new entry at the top of `appcast.xml` and pushes it. If the feed went up first, users would be offered a download that doesn't exist yet.
+1. Checks that the tree is clean and the certificate and credentials exist, before changing anything.
+2. Bumps the version and build number. Sparkle compares the build number, so it must always grow.
+3. Tests and builds the Release app.
+4. Signs the app with Developer ID, from the innermost Sparkle helpers (XPC services, Autoupdate, Updater.app, the framework) out to the app with `Plantty/Plantty.entitlements`.
+5. Notarizes the app and staples Apple's approval to it.
+6. Makes the zip (for Sparkle) and the DMG (signed, notarized and stapled).
+7. Signs the zip with the Sparkle key.
+8. Commits and pushes the bump, then publishes the GitHub release.
+9. Only then adds the new entry at the top of `appcast.xml` and pushes it. If the feed went up first, users would be offered a download that doesn't exist yet.
+
+One-time setup on the release Mac:
+
+- **Certificate:** a "Developer ID Application" certificate in the login Keychain. Create it in Xcode → Settings → Accounts → team → Manage Certificates → + (Account Holder only).
+- **Notarization credentials:** run `xcrun notarytool store-credentials plantty-notary --apple-id <email> --team-id <team>` with an app-specific password from account.apple.com.
+- **Sparkle key:** the Sparkle private key in the login Keychain. To restore it from a backup, run `generate_keys -f <file>`.
+
+The hardened runtime is on, which notarization requires. `Plantty/Plantty.entitlements` matches Ghostty's: it lets programs running inside the terminal ask for the mic, camera, AppleScript, contacts and so on. The matching `NS…UsageDescription` texts are in `project.yml`.
 
 Things to know:
 
 - **The signing key:** the private key lives only in the maintainer's login Keychain (created by Sparkle's `generate_keys`). Losing it means existing installs can never be updated again. Back it up with `build/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_keys -x key-backup.txt` and keep the file somewhere safe and private. Never commit it, and never change `SUPublicEDKey`.
 - **Downloads:** the update archive is `Plantty.zip` from the GitHub release. The DMG is for first installs.
 - **Testing an update:** Sparkle refuses `file://` URLs. Serve a test appcast and zip with `python3 -m http.server`, then point the app at it with `defaults write dev.plantty.Plantty SUFeedURL http://localhost:PORT/appcast.xml`. Delete the `SU*` defaults afterwards.
-- **Signing:** builds are ad-hoc signed and not notarized. The README tells users how to open them the first time. Sparkle's EdDSA signature is what protects updates.
+- **Signing:** Debug builds are ad-hoc signed (`CODE_SIGN_IDENTITY: "-"`). Only `release.sh` signs with Developer ID. Sparkle's EdDSA signature protects updates on top of that.
