@@ -29,6 +29,8 @@ struct TabBarView: View {
 
             Spacer(minLength: 0)
 
+            UsageChips()
+
             ChromeButton(systemImage: "sidebar.left", help: "Use Vertical Tabs") { tabStyle = .vertical }
         }
         .padding(.trailing, 8)

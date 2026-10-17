@@ -31,6 +31,7 @@ struct ContentView: View {
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
     @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
     @State private var sidebarPeek = false
+    @State private var usage = UsageService.shared
     @State private var renameText = ""
 
     var body: some View {
@@ -58,6 +59,7 @@ struct ContentView: View {
         .background(Theme.isTranslucent ? Color.clear : Theme.background)
         .background(WindowChrome(hidesTrafficLights: tabStyle == .vertical && sidebarAutoHide && !sidebarPeek))
         .onChange(of: sidebarAutoHide) { sidebarPeek = false }
+        .onChange(of: usage.isPanelOpen) { if !usage.isPanelOpen { sidebarPeek = false } }
         .ignoresSafeArea()
         .preferredColorScheme(Theme.isDark ? .dark : .light)
         .overlay(alignment: .top) {
@@ -97,7 +99,8 @@ extension ContentView {
                     .background(Theme.background) // keep terminal text from showing through when translucent
                     .overlay(alignment: .trailing) { Theme.separator.frame(width: 1) }
                     .shadow(color: .black.opacity(0.35), radius: 18, x: 6)
-                    .onHover { if !$0 { sidebarPeek = false } }
+                    // The usage panel is a popover anchored in the sidebar; hiding it would close the panel.
+                    .onHover { if !$0, !usage.isPanelOpen { sidebarPeek = false } }
                     .transition(.move(edge: .leading))
             }
         }

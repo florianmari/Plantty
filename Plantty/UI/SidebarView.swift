@@ -40,7 +40,8 @@ struct SidebarView: View {
             HStack(spacing: 2) {
                 ChromeButton(systemImage: "folder.badge.plus", help: "New Project") { ws.newProject() }
                 ChromeButton(systemImage: "plus", help: "New Tab") { ws.newTab() }
-                Spacer()
+                Spacer(minLength: 4)
+                UsageChips()
                 ChromeButton(systemImage: "rectangle.topthird.inset.filled", help: "Use Horizontal Tabs") {
                     tabStyle = .horizontal
                 }

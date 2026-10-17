@@ -21,6 +21,7 @@ struct PlanttyApp: App {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         _ = Updater.controller // starts Sparkle's scheduled background checks
+        UsageService.shared.start()
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
@@ -44,6 +45,7 @@ struct PlanttyCommands: Commands {
     @AppStorage("tabStyle") private var tabStyle = TabStyle.vertical
     @AppStorage(Workspace.restoreSessionKey) private var restoreSession = true
     @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
+    @AppStorage(showUsageKey) private var showUsage = true
 
     var body: some Commands {
         CommandGroup(after: .appInfo) {
@@ -82,6 +84,8 @@ struct PlanttyCommands: Commands {
             Toggle("Auto-Hide Sidebar", isOn: $sidebarAutoHide)
                 .keyboardShortcut("s", modifiers: [.command, .control])
             Toggle("Restore Tabs on Launch", isOn: $restoreSession)
+            Toggle("Show AI Usage", isOn: $showUsage)
+                .onChange(of: showUsage) { if showUsage { UsageService.shared.refresh() } }
         }
     }
 }

@@ -73,6 +73,7 @@ targets:
       - PlanttyTests
       # SplitNode is pure; compile it straight in so tests don't boot the terminal app.
       - Plantty/Model/SplitNode.swift
+      - Plantty/Usage/UsageModel.swift
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
