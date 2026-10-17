@@ -3,6 +3,15 @@
   <channel>
     <title>Plantty</title>
     <item>
+      <title>Plantty 0.1.4</title>
+      <pubDate>Sat, 17 Oct 2026 18:05:35 GMT</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>0.1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <sparkle:releaseNotesLink>https://github.com/florianmari/Plantty/releases/tag/v0.1.4</sparkle:releaseNotesLink>
+      <enclosure url="https://github.com/florianmari/Plantty/releases/download/v0.1.4/Plantty.zip" type="application/octet-stream" sparkle:edSignature="OEBHj1dsnf3EeT5HT8jBLvVq7ZLYwU8ja8WFPQSUxwAeCa5P/NvLbXXlm7QfLKeaigcU8Ldl9ruJnBY5WlVnBg==" length="9834119"/>
+    </item>
+    <item>
       <title>Plantty 0.1.3</title>
       <pubDate>Sat, 17 Oct 2026 17:45:17 GMT</pubDate>
       <sparkle:version>4</sparkle:version>
