@@ -66,6 +66,8 @@ xattr -dr com.apple.quarantine /Applications/Plantty.app
 
 You need macOS 26 or later on Apple Silicon.
 
+Plantty updates itself. It checks for new versions in the background, and you can also choose **Plantty → Check for Updates…**. Updates come through [Sparkle](https://sparkle-project.org) and are cryptographically signed, so Plantty only installs builds from this project. Version 0.1.1 and older have no updater, so install 0.1.2 by hand once.
+
 ## Build from source
 
 You need:
@@ -99,7 +101,8 @@ Plantty/
   Model/       Workspace (projects, tabs, panes, saving) and SplitNode (split layout tree)
   UI/          SwiftUI: sidebar, tab bar, split container, command palette
 PlanttyTests/  unit tests for the split layout and its saved form
-scripts/       build-ghostty.sh, make-icon.swift (draws the app icon)
+scripts/       build-ghostty.sh, release.sh (publishes a release + update feed), make-icon.swift (draws the app icon)
+appcast.xml    Sparkle update feed: the list of released versions
 project.yml    XcodeGen project definition
 ```
 

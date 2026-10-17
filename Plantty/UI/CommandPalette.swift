@@ -109,6 +109,7 @@ struct CommandPalette: View {
                   icon: "sidebar.left", shortcut: "⇧⌘T") { tabStyle = tabStyle == .vertical ? .horizontal : .vertical },
             .init(id: "sidebar-autohide", title: sidebarAutoHide ? "Keep Sidebar Open" : "Auto-Hide Sidebar",
                   icon: "sidebar.left", shortcut: "⌃⌘S") { sidebarAutoHide.toggle() },
+            .init(id: "check-updates", title: "Check for Updates…", icon: "arrow.down.circle") { Updater.checkForUpdates() },
             .init(id: "restore-session",
                   title: restoreSession ? "Don't Restore Tabs on Launch" : "Restore Tabs on Launch",
                   icon: "clock.arrow.circlepath") { restoreSession.toggle() },

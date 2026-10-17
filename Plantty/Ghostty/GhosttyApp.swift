@@ -163,6 +163,8 @@ final class GhosttyApp {
         case GHOSTTY_ACTION_TOGGLE_COMMAND_PALETTE:
             // ghostty binds ⌘⇧P to this by default, so it arrives here when a terminal has focus.
             onMain { Workspace.shared.isPaletteOpen.toggle() }
+        case GHOSTTY_ACTION_CHECK_FOR_UPDATES:
+            onMain { Updater.checkForUpdates() }
         case GHOSTTY_ACTION_RING_BELL:
             onMain { NSSound.beep() }
         case GHOSTTY_ACTION_QUIT:

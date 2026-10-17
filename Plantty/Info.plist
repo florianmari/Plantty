@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Sparkle: where to look for new versions, and the key updates must be signed with. -->
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/florianmari/Plantty/main/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>zqHWsn3R0IxHDZxEBNVSGtOVBhn+0L41C/okzr1iM4g=</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+</dict>
+</plist>

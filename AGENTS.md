@@ -60,11 +60,27 @@ scripts/                           build-ghostty.sh, make-icon.swift
 - Sending keystrokes with `osascript`/System Events needs Accessibility permission. If you don't have it, drive the app with a temporary harness: an env var checked in `applicationDidFinishLaunching` that calls `Workspace` methods or `SurfaceView.runAction("new_split:right")`. Delete the harness before committing.
 - Run the tests before every commit.
 
-## Releasing
+## Releasing and updates
 
-1. Bump `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in `project.yml`.
-2. Run `xcodebuild ... -configuration Release build`.
-3. Zip with `ditto -c -k --keepParent`. For the DMG, put the `.app` and an `Applications` symlink in a folder and run `hdiutil create -format UDZO`.
-4. Run `gh release create vX.Y.Z Plantty.dmg Plantty.zip`.
+Updates use Sparkle 2, a Swift package pinned in `project.yml`. `Plantty/Info.plist` holds the feed URL (`appcast.xml` on `main`, served from raw.githubusercontent.com) and the EdDSA public key. `Plantty/Updater.swift` starts the updater; "Check for Updates…" is in the app menu and the palette.
 
-Builds are ad-hoc signed and not notarized. The README tells users how to open them anyway.
+To release, write the notes to a markdown file and run:
+
+```sh
+scripts/release.sh 0.1.2 notes.md
+```
+
+The script:
+
+1. Bumps the version and build number. Sparkle compares the build number, so it must always grow.
+2. Tests, builds the Release app, and makes the zip and DMG.
+3. Signs the zip with the private key from the login Keychain.
+4. Commits and pushes the bump, then publishes the GitHub release.
+5. Only then adds the new entry at the top of `appcast.xml` and pushes it. If the feed went up first, users would be offered a download that doesn't exist yet.
+
+Things to know:
+
+- **The signing key:** the private key lives only in the maintainer's login Keychain (created by Sparkle's `generate_keys`). Losing it means existing installs can never be updated again. Back it up with `build/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_keys -x key-backup.txt` and keep the file somewhere safe and private. Never commit it, and never change `SUPublicEDKey`.
+- **Downloads:** the update archive is `Plantty.zip` from the GitHub release. The DMG is for first installs.
+- **Testing an update:** Sparkle refuses `file://` URLs. Serve a test appcast and zip with `python3 -m http.server`, then point the app at it with `defaults write dev.plantty.Plantty SUFeedURL http://localhost:PORT/appcast.xml`. Delete the `SU*` defaults afterwards.
+- **Signing:** builds are ad-hoc signed and not notarized. The README tells users how to open them the first time. Sparkle's EdDSA signature is what protects updates.

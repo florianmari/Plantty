@@ -3,6 +3,10 @@ options:
   bundleIdPrefix: dev.plantty
   deploymentTarget:
     macOS: "26.0"
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    exactVersion: 2.10.0
 settings:
   base:
     SWIFT_VERSION: "5.0"
@@ -25,6 +29,7 @@ targets:
       - path: THIRD_PARTY_NOTICES.md
         buildPhase: resources
     dependencies:
+      - package: Sparkle
       - framework: vendor/GhosttyKit.xcframework
         embed: false
       - sdk: Carbon.framework
@@ -38,6 +43,8 @@ targets:
         # libghostty is built for the host only (-Dxcframework-target=native).
         ARCHS: arm64
         GENERATE_INFOPLIST_FILE: YES
+        # Merged with the generated keys; holds Sparkle's feed URL and public key.
+        INFOPLIST_FILE: Plantty/Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: Plantty
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
         INFOPLIST_KEY_NSHumanReadableCopyright: ""

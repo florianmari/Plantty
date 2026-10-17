@@ -19,6 +19,10 @@ struct PlanttyApp: App {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        _ = Updater.controller // starts Sparkle's scheduled background checks
+    }
+
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -42,6 +46,9 @@ struct PlanttyCommands: Commands {
     @AppStorage(sidebarAutoHideKey) private var sidebarAutoHide = false
 
     var body: some Commands {
+        CommandGroup(after: .appInfo) {
+            Button("Check for Updates…") { Updater.checkForUpdates() }
+        }
         CommandGroup(replacing: .newItem) {
             Button("New Tab") { ws.newTab() }.keyboardShortcut("t")
             Button("New Project…") { ws.newProject() }.keyboardShortcut("n", modifiers: [.command, .shift])
