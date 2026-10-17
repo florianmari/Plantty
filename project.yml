@@ -19,6 +19,11 @@ targets:
       - path: vendor/share/ghostty
         type: folder
         buildPhase: resources
+      # License notices must ship inside the app (libghostty is statically linked).
+      - path: LICENSE
+        buildPhase: resources
+      - path: THIRD_PARTY_NOTICES.md
+        buildPhase: resources
     dependencies:
       - framework: vendor/GhosttyKit.xcframework
         embed: false

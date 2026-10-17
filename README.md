@@ -103,6 +103,8 @@ project.yml    XcodeGen project definition
 
 Projects and saved tabs are stored in `~/Library/Application Support/Plantty/projects.json`.
 
-## Credits
+## License
 
-Plantty embeds [Ghostty](https://github.com/ghostty-org/ghostty) by Mitchell Hashimoto and the Ghostty contributors (MIT License). Parts of the input handling are adapted from Ghostty's macOS app, and those files keep the original notice.
+Plantty is released under the [MIT License](LICENSE), the same license as Ghostty.
+
+It embeds [Ghostty](https://github.com/ghostty-org/ghostty) by Mitchell Hashimoto and the Ghostty contributors (MIT). Parts of the input handling are adapted from Ghostty's macOS app, and those files keep the original notice. libghostty and the libraries compiled into it are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), which also ships inside the app.
